@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://grassTileSet.tres" type="TileSet" id=1]
 [ext_resource path="res://Players/Dinosaur.tscn" type="PackedScene" id=2]
+[ext_resource path="res://World/OrbLocation.gd" type="Script" id=3]
+[ext_resource path="res://World/Buff/Buff.tscn" type="PackedScene" id=4]
 
 [node name="World" type="Node" index="0"]
 
@@ -31,5 +33,22 @@ _sections_unfolded = [ "Cell" ]
 [node name="Dinosaur" parent="." index="1" instance=ExtResource( 2 )]
 
 position = Vector2( 1216, 352 )
+
+[node name="OrbLocation" type="Node2D" parent="." index="2"]
+
+position = Vector2( 1184, 448 )
+scale = Vector2( 0.5, 0.5 )
+script = ExtResource( 3 )
+_sections_unfolded = [ "Transform" ]
+orb_scene = ExtResource( 4 )
+
+[node name="OrbTimer" type="Timer" parent="OrbLocation" index="0"]
+
+process_mode = 1
+wait_time = 2.0
+one_shot = false
+autostart = true
+
+[connection signal="timeout" from="OrbLocation/OrbTimer" to="OrbLocation" method="_on_OrbTimer_timeout"]
 
 
