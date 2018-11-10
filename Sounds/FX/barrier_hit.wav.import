@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/barrier_hit.wav-97de9e726b6a938cd2a30a084f20f15a.sample"
+
+[deps]
+
+source_file="res://Sounds/FX/barrier_hit.wav"
+dest_files=[ "res://.import/barrier_hit.wav-97de9e726b6a938cd2a30a084f20f15a.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0
