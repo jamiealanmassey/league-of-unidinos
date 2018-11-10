@@ -28,9 +28,10 @@ collision/safe_margin = 0.08
 script = ExtResource( 1 )
 maxHealth = 100
 currentHealth = 100
+baseDamage = 5
 moveSpeed = 250
-velocitySpeed = 1
-gravity = 1000
+gravity = 1200
+jumpSpeed = -400
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 

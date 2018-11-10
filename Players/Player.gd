@@ -1,14 +1,26 @@
 extends KinematicBody2D
 
+enum PlayerState {
+	IDLE,
+	MOVING,
+	JUMPING,
+	CHARGING
+}
+
 export(float) var maxHealth = 100
 export(float) var currentHealth = 100
+export(float) var baseDamage = 5
 
 export(float) var moveSpeed = 250
-export(float) var velocitySpeed = 1
-export(float) var gravity = 1000
+export(float) var gravity = 1200
+export(float) var jumpSpeed = -600
 
 var velocity = Vector2()
 var keyStates = []
+var playerState = PlayerState.IDLE
+
+var chargeTimer = null
+var chargeDuration = 2
 
 signal player_moved
 signal player_killed
@@ -56,30 +68,54 @@ func calulate_input():
 	keyStates.sort_custom(KeyStateSorter, "sort")
 	for key in keyStates:
 		if (key.state):
-			match key.name:
-				"left":
-					velocity.x -= moveSpeed
-				"right":
-					velocity.x += moveSpeed
-				"down":
-					velocity.y += moveSpeed
+			if (key.name == "left"):
+				velocity.x -= moveSpeed
+				set_player_state(false)
+			elif (key.name == "right"):
+				velocity.x += moveSpeed
+				set_player_state(false)
+			elif (key.name == "jump" && is_on_floor()):
+				velocity.y = jumpSpeed
+				set_player_state(true)
+			else:
+				set_player_state(false)
 	
 	if (velocity.x != 0 && velocity.y != 0):
 		emit_signal("player_moved")
 
 
+## Takes damage (caps health to 0 or 100) and checks if the player has
+## died or not
 func take_damage(amount):
 	currentHealth = clamp(currentHealth - amount, 0, maxHealth)
 	if (currentHealth == 0):
 		emit_signal("player_killed")
 
 
+
+## Helper function to determine the state that the player is currently in
+func set_player_state(is_jumping):
+	if (is_jumping):
+		playerState = PlayerState.JUMPING
+	else:
+		if (velocity.x != 0 && velocity.y != 0):
+			playerState = PlayerState.MOVING
+		else:
+			playerState = PlayerState.IDLE
+
+
 func _ready():
 	keyStates = [
 	KeyState.new("left"), 
 	KeyState.new("right"), 
-	KeyState.new("up"), 
-	KeyState.new("down")]
+	KeyState.new("jump"), 
+	KeyState.new("attack"),
+	KeyState.new("special"),
+	KeyState.new("charge")]
+	
+	chargeTimer = Timer.new()
+	chargeTimer.set_one_shot(true)
+	#chargeTimer.connect("timeout", self, "on_charge_compelete")
 
 
 func _process(delta):
@@ -88,4 +124,6 @@ func _process(delta):
 
 func _physics_process(delta):
 	velocity.y += gravity * delta
+	if (playerState == PlayerState.JUMPING && is_on_floor()):
+		set_player_state(false)
 	velocity = move_and_slide(velocity, Vector2(0, -1))

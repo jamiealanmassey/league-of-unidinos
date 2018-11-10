@@ -17,11 +17,9 @@ position = Vector2( 397.151, 223.424 )
 [node name="Dinosaur" parent="." index="1" instance=ExtResource( 2 )]
 
 position = Vector2( 278.678, 224.279 )
-maxHealth = 100
-currentHealth = 100
-moveSpeed = 250
-velocitySpeed = 1
-gravity = 1000
+baseDamage = 5
+gravity = 1200
+jumpSpeed = -600
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." index="2"]
 
