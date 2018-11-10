@@ -31,7 +31,7 @@ currentHealth = 100
 baseDamage = 5
 moveSpeed = 250
 gravity = 1200
-jumpSpeed = -400
+jumpSpeed = -600
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 

@@ -7,7 +7,9 @@
 custom_solver_bias = 0.0
 extents = Vector2( 16, 16 )
 
-[node name="grassTiles" type="Node" index="0"]
+[node name="grassTiles" type="Node"]
+
+editor/display_folded = true
 
 [node name="0" type="Sprite" parent="." index="0"]
 
