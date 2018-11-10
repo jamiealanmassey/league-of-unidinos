@@ -7,20 +7,26 @@ enum PlayerState {
 	CHARGING
 }
 
-export(float) var maxHealth = 100
-export(float) var currentHealth = 100
-export(float) var baseDamage = 5
+const Cooldown = preload('res://Cooldown.gd')
 
-export(float) var moveSpeed = 250
+onready var charge_cooldown = null
+
+export(float) var max_health = 100
+export(float) var current_health = 100
+export(float) var base_damage = 5
+
+export(float) var move_speed = 250
 export(float) var gravity = 1200
-export(float) var jumpSpeed = -600
+export(float) var jump_speed = -600
+export(float) var charge_boost_factor = 10
+export(float) var charge_duration = 0.08
+export(float) var charge_duration_cooldown = 2
 
 var velocity = Vector2()
-var keyStates = []
-var playerState = PlayerState.IDLE
+var key_states = []
+var player_state = PlayerState.IDLE
 
-var chargeTimer = null
-var chargeDuration = 2
+var charge_timer = null
 
 signal player_moved
 signal player_killed
@@ -43,7 +49,7 @@ class KeyState:
 
 
 ## Custom sorting class for KeyState objects (sorts by timestamp)
-class KeyStateSorter:
+class key_statesorter:
 	static func sort(a, b):
 		return (a.stamp < b.stamp)
 
@@ -61,51 +67,69 @@ func update_input(key_state):
 ## Helper function to calculate the input for this frame of
 ## the game by updating all key states
 func calulate_input():
-	velocity.x = 0
-	for key_index in range(keyStates.size()):
-		update_input(keyStates[key_index])
+	if (player_state == PlayerState.CHARGING):
+		return
 	
-	keyStates.sort_custom(KeyStateSorter, "sort")
-	for key in keyStates:
+	velocity.x = 0
+	for key_index in range(key_states.size()):
+		update_input(key_states[key_index])
+	
+	key_states.sort_custom(key_statesorter, "sort")
+	for key in key_states:
 		if (key.state):
 			if (key.name == "left"):
-				velocity.x -= moveSpeed
+				velocity.x -= move_speed
 				set_player_state(false)
 			elif (key.name == "right"):
-				velocity.x += moveSpeed
+				velocity.x += move_speed
 				set_player_state(false)
 			elif (key.name == "jump" && is_on_floor()):
-				velocity.y = jumpSpeed
+				velocity.y = jump_speed
 				set_player_state(true)
+			elif (key.name == "charge" && player_state != PlayerState.CHARGING && charge_cooldown.is_ready()):
+				player_state = PlayerState.CHARGING
+				charge_timer.start()
 			else:
 				set_player_state(false)
+	
+	if (velocity.x != 0 && player_state == PlayerState.CHARGING):
+		velocity.x *= charge_boost_factor
 	
 	if (velocity.x != 0 && velocity.y != 0):
 		emit_signal("player_moved")
 
 
+## charge_timer callback to reset the player state and stop them
+## from charging forever
+func on_charge_complete():
+	player_state = PlayerState.IDLE
+	set_player_state(is_on_floor())
+
+
 ## Takes damage (caps health to 0 or 100) and checks if the player has
 ## died or not
 func take_damage(amount):
-	currentHealth = clamp(currentHealth - amount, 0, maxHealth)
-	if (currentHealth == 0):
+	current_health = clamp(current_health - amount, 0, max_health)
+	if (current_health == 0):
 		emit_signal("player_killed")
-
 
 
 ## Helper function to determine the state that the player is currently in
 func set_player_state(is_jumping):
+	if (player_state == PlayerState.CHARGING):
+		return
+	
 	if (is_jumping):
-		playerState = PlayerState.JUMPING
+		player_state = PlayerState.JUMPING
 	else:
 		if (velocity.x != 0 && velocity.y != 0):
-			playerState = PlayerState.MOVING
+			player_state = PlayerState.MOVING
 		else:
-			playerState = PlayerState.IDLE
+			player_state = PlayerState.IDLE
 
 
 func _ready():
-	keyStates = [
+	key_states = [
 	KeyState.new("left"), 
 	KeyState.new("right"), 
 	KeyState.new("jump"), 
@@ -113,17 +137,22 @@ func _ready():
 	KeyState.new("special"),
 	KeyState.new("charge")]
 	
-	chargeTimer = Timer.new()
-	chargeTimer.set_one_shot(true)
-	#chargeTimer.connect("timeout", self, "on_charge_compelete")
+	charge_timer = Timer.new()
+	charge_timer.set_one_shot(true)
+	charge_timer.set_wait_time(charge_duration)
+	charge_timer.connect("timeout", self, "on_charge_complete")
+	add_child(charge_timer)
+	
+	charge_cooldown = Cooldown.new(charge_duration_cooldown)
 
 
 func _process(delta):
 	calulate_input()
+	charge_cooldown.tick(delta)
 
 
 func _physics_process(delta):
 	velocity.y += gravity * delta
-	if (playerState == PlayerState.JUMPING && is_on_floor()):
+	if (player_state == PlayerState.JUMPING && is_on_floor()):
 		set_player_state(false)
 	velocity = move_and_slide(velocity, Vector2(0, -1))

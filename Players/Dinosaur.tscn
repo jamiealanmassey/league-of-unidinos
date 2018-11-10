@@ -26,12 +26,15 @@ collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
-maxHealth = 100
-currentHealth = 100
-baseDamage = 5
-moveSpeed = 250
+max_health = 100
+current_health = 100
+base_damage = 5
+move_speed = 250
 gravity = 1200
-jumpSpeed = -600
+jump_speed = -600
+charge_boost_factor = 10
+charge_duration = 0.08
+charge_duration_cooldown = 2
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
