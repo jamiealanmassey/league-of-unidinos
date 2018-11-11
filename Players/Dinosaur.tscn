@@ -1,49 +1,67 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Players/Dinosaur.gd" type="Script" id=1]
+[ext_resource path="res://Players/Sprites/Dinosaur.png" type="Texture" id=2]
+[ext_resource path="res://Players/Visual.gd" type="Script" id=3]
 
-[sub_resource type="Gradient" id=1]
-
-offsets = PoolRealArray( 0, 0.799486, 0.994859, 1 )
-colors = PoolColorArray( 0, 0, 0, 1, 0.59383, 0.59383, 0.59383, 1, 0.661525, 0.661525, 0.661525, 1, 1, 1, 1, 1 )
-
-[sub_resource type="GradientTexture" id=2]
-
-flags = 4
-gradient = SubResource( 1 )
-width = 2048
-
-[sub_resource type="CapsuleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=5]
 
 custom_solver_bias = 0.0
-radius = 10.0
-height = 20.0
+extents = Vector2( 17.4205, 26.7317 )
+
+[sub_resource type="RectangleShape2D" id=4]
+
+custom_solver_bias = 0.0
+extents = Vector2( 19.82, 21.6312 )
 
 [node name="Dinosaur" type="KinematicBody2D"]
 
+position = Vector2( -20, 0 )
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
+_sections_unfolded = [ "Transform" ]
 max_health = 100
 current_health = 100
 base_damage = 5
 move_speed = 250
 gravity = 1200
 jump_speed = -600
-charge_boost_factor = 10
+charge_boost_factor = 6
 charge_duration = 0.08
 charge_duration_cooldown = 2
 
 [node name="Sprite" type="Sprite" parent="." index="0"]
 
 position = Vector2( -0.180512, -0.597811 )
-scale = Vector2( 0.0099668, -38.3457 )
-texture = SubResource( 2 )
+texture = ExtResource( 2 )
+script = ExtResource( 3 )
+_sections_unfolded = [ "Transform" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="1"]
 
-shape = SubResource( 3 )
+position = Vector2( 19.4259, 4.07912 )
+scale = Vector2( 1.85558, 1.94753 )
+shape = SubResource( 5 )
+
+[node name="AttackArea" type="Area2D" parent="." index="2"]
+
+visible = false
+position = Vector2( 27.7563, 2.72856 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea" index="0"]
+
+position = Vector2( 41.903, -4.4865 )
+scale = Vector2( 1.28614, 2.65066 )
+shape = SubResource( 4 )
 
 

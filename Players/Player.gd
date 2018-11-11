@@ -18,7 +18,7 @@ export(float) var base_damage = 5
 export(float) var move_speed = 250
 export(float) var gravity = 1200
 export(float) var jump_speed = -600
-export(float) var charge_boost_factor = 10
+export(float) var charge_boost_factor = 6
 export(float) var charge_duration = 0.08
 export(float) var charge_duration_cooldown = 2
 
@@ -156,3 +156,8 @@ func _physics_process(delta):
 	if (player_state == PlayerState.JUMPING && is_on_floor()):
 		set_player_state(false)
 	velocity = move_and_slide(velocity, Vector2(0, -1))
+	
+	if (velocity.x > 0):
+		set_global_transform(Transform2D(Vector2(1,0), Vector2(0,1), Vector2(position.x,position.y)))
+	elif (velocity.x < 0):
+		set_global_transform(Transform2D(Vector2(-1,0), Vector2(0,1), Vector2(position.x,position.y)))

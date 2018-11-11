@@ -32,7 +32,7 @@ _sections_unfolded = [ "Cell" ]
 
 [node name="Dinosaur" parent="." index="1" instance=ExtResource( 2 )]
 
-position = Vector2( 1376, 544 )
+position = Vector2( 1307.81, 322.766 )
 
 [node name="OrbLocation" type="Node2D" parent="." index="2"]
 
