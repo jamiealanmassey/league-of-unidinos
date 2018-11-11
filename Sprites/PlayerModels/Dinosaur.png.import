@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Dinosaur.png-39d27bc73166cbc0238daae11bb28f29.stex"
+path="res://.import/Dinosaur.png-7fa6c702c4a4abd03593e53cd76d372c.stex"
 
 [deps]
 
-source_file="res://Players/Sprites/Dinosaur.png"
-dest_files=[ "res://.import/Dinosaur.png-39d27bc73166cbc0238daae11bb28f29.stex" ]
+source_file="res://Sprites/PlayerModels/Dinosaur.png"
+dest_files=[ "res://.import/Dinosaur.png-7fa6c702c4a4abd03593e53cd76d372c.stex" ]
 
 [params]
 

@@ -182,4 +182,16 @@ position = Vector2( 16, 16 )
 shape = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 
+[node name="6" type="Sprite" parent="." index="6"]
+
+position = Vector2( 0, 128 )
+texture = ExtResource( 1 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 32, 0, 32, 32 )
+_sections_unfolded = [ "Offset", "Region" ]
+__meta__ = {
+"_edit_group_": true
+}
+
 

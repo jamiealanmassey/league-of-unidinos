@@ -7,7 +7,7 @@
 custom_solver_bias = 0.0
 extents = Vector2( 10, 10 )
 
-[node name="Turret" type="StaticBody2D" index="0"]
+[node name="Turret" type="StaticBody2D"]
 
 scale = Vector2( 1.4, 1.4 )
 input_pickable = false

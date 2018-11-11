@@ -10,11 +10,16 @@ extents = Vector2( 60.1, 63.5575 )
 
 [node name="Minion" type="KinematicBody2D"]
 
+position = Vector2( -16, -16 )
+scale = Vector2( 0.5, 0.5 )
 input_pickable = false
 collision_layer = 1
 collision_mask = 1
 collision/safe_margin = 0.08
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
 gravity = 300
 direction = 1.0
 move_speed = 250
