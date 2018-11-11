@@ -7,7 +7,7 @@ var minion = null
 func _on_EnemySpawner_timeout():
 	
 	minion = minion_scene.instance()
-	minion.set_position(self.get_position())
+	minion.set_position(Vector2(100,500))
 	get_tree().get_root().add_child(minion)
 
 	
