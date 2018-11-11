@@ -5,7 +5,7 @@
 [ext_resource path="res://World/OrbLocation.gd" type="Script" id=3]
 [ext_resource path="res://World/Buff/Buff.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Minions/Minion.tscn" type="PackedScene" id=5]
-[ext_resource path="res://Turrets/Turret.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Sprites/Turrets/Turret.tscn" type="PackedScene" id=6]
 
 [node name="World" type="Node" index="0"]
 
@@ -13,7 +13,6 @@ _sections_unfolded = [ "Pause" ]
 
 [node name="TileMap" type="TileMap" parent="." index="0"]
 
-position = Vector2( -5, 0 )
 mode = 0
 tile_set = ExtResource( 1 )
 cell_size = Vector2( 32, 32 )
@@ -35,7 +34,7 @@ _sections_unfolded = [ "Cell" ]
 
 [node name="Dinosaur" parent="." index="1" instance=ExtResource( 2 )]
 
-position = Vector2( 1307.81, 322.766 )
+position = Vector2( 1351.02, 319.442 )
 
 [node name="OrbLocation" type="Node2D" parent="." index="2"]
 
@@ -57,7 +56,7 @@ autostart = true
 
 [node name="Minion" parent="." index="3" instance=ExtResource( 5 )]
 
-position = Vector2( 159.943, 719.742 )
+position = Vector2( 475.608, 733.104 )
 _sections_unfolded = [ "Linear" ]
 
 [node name="Turret" parent="." index="4" instance=ExtResource( 6 )]

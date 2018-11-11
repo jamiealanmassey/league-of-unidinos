@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/tower_round.svg-9bfa5c451a34730cab493d6e74f830a9.stex"
+path="res://.import/tower_round.svg-dc06ca6ebaef9262e64d97579c48772f.stex"
 
 [deps]
 
-source_file="res://Turrets/tower_round.svg"
-dest_files=[ "res://.import/tower_round.svg-9bfa5c451a34730cab493d6e74f830a9.stex" ]
+source_file="res://Sprites/Turrets/tower_round.svg"
+dest_files=[ "res://.import/tower_round.svg-dc06ca6ebaef9262e64d97579c48772f.stex" ]
 
 [params]
 

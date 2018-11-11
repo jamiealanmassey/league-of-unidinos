@@ -4,17 +4,17 @@
 [ext_resource path="res://Players/Sprites/Dinosaur.png" type="Texture" id=2]
 [ext_resource path="res://Players/Visual.gd" type="Script" id=3]
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=1]
 
 custom_solver_bias = 0.0
 extents = Vector2( 17.4205, 26.7317 )
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=2]
 
 custom_solver_bias = 0.0
 extents = Vector2( 19.82, 21.6312 )
 
-[node name="Dinosaur" type="KinematicBody2D"]
+[node name="Dinosaur" type="KinematicBody2D" index="0"]
 
 position = Vector2( -20, 0 )
 input_pickable = false
@@ -44,7 +44,7 @@ _sections_unfolded = [ "Transform" ]
 
 position = Vector2( 19.4259, 4.07912 )
 scale = Vector2( 1.85558, 1.94753 )
-shape = SubResource( 5 )
+shape = SubResource( 1 )
 
 [node name="AttackArea" type="Area2D" parent="." index="2"]
 
@@ -62,6 +62,32 @@ audio_bus_name = "Master"
 
 position = Vector2( 41.903, -4.4865 )
 scale = Vector2( 1.28614, 2.65066 )
-shape = SubResource( 4 )
+shape = SubResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="." index="3"]
+
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 1, 1 )
+limit_left = -10000000
+limit_top = -10000000
+limit_right = 10000000
+limit_bottom = 10000000
+limit_smoothed = false
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = false
+smoothing_speed = 5.0
+offset_v = 0.0
+offset_h = 0.0
+drag_margin_left = 0.2
+drag_margin_top = 0.2
+drag_margin_right = 0.2
+drag_margin_bottom = 0.2
+editor_draw_screen = true
+editor_draw_limits = false
+editor_draw_drag_margin = false
+_sections_unfolded = [ "Offset" ]
 
 
